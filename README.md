@@ -6,4 +6,4 @@ See [LICENSE](./LICENSE) and [NOTICE](./NOTICE) for licensing information.
 
 ## Deploy to GitHub Pages
 
-Pushing to `main` runs `.github/workflows/deploy.yml` to build and deploy `dist/`. In the repository settings, set Pages' build and deployment source to **GitHub Actions**. The custom domain is `artistmidhun.com` (`public/CNAME`); configure the domain's DNS for GitHub Pages and wait for DNS verification and HTTPS provisioning.
+Pushing to `main` runs `.github/workflows/deploy.yml` to build and deploy `dist/`. In the repository settings, set Pages' build and deployment source to **GitHub Actions**, then add `artistmidhun.com` as the custom domain. Configure the domain's DNS for GitHub Pages and wait for DNS verification and HTTPS provisioning.
