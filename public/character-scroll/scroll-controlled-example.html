@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scroll controlled character</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: #f1f0ed; }
+    .scroll-section { height: 260vh; }
+    .stage {
+      position: sticky;
+      top: 0;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #character {
+      display: block;
+      width: min(38vw, 46vh, 360px);
+      height: auto;
+      aspect-ratio: 396 / 935;
+      object-fit: contain;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <section id="character-scroll" class="scroll-section" aria-label="Scroll controlled character">
+    <div class="stage">
+      <img id="character" src="./character_0000.png" width="396" height="935" alt="Illustrated character" decoding="async">
+    </div>
+  </section>
+  <script>
+    const section = document.getElementById('character-scroll')
+    const image = document.getElementById('character')
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const frames = new Map([[0, image]])
+    const pending = new Set()
+    let targetFrame = 0
+    let shownFrame = 0
+    let raf = 0
+
+    function frameUrl(frame) {
+      return './character_' + String(frame).padStart(4, '0') + '.png'
+    }
+    function showFrame(frame) {
+      const loaded = frames.get(frame)
+      if (!loaded) return
+      if (image.dataset.frame !== String(frame)) {
+        image.src = loaded.src
+        image.dataset.frame = String(frame)
+        shownFrame = frame
+      }
+    }
+    function trimCache(center) {
+      for (const [frame] of frames) {
+        if (frame !== 0 && frame !== shownFrame && Math.abs(frame - center) > 6) frames.delete(frame)
+      }
+    }
+    function preload(frame) {
+      if (frame < 0 || frame > 95 || frames.has(frame) || pending.has(frame)) return
+      pending.add(frame)
+      const next = new Image()
+      next.decoding = 'async'
+      next.onload = () => {
+        pending.delete(frame)
+        frames.set(frame, next)
+        if (!motion.matches && frame === targetFrame) showFrame(frame)
+        trimCache(targetFrame)
+      }
+      next.onerror = () => pending.delete(frame)
+      next.src = frameUrl(frame)
+    }
+    function update() {
+      raf = 0
+      if (motion.matches) {
+        image.src = '../characters/portrait.png'
+        image.dataset.frame = 'reduced'
+        targetFrame = 0
+        return
+      }
+      if (image.dataset.frame === 'reduced') {
+        image.src = frameUrl(0)
+        image.dataset.frame = '0'
+      }
+      const sectionTop = section.getBoundingClientRect().top + window.scrollY
+      const range = Math.max(section.offsetHeight - window.innerHeight, 1)
+      const progress = Math.max(0, Math.min(1, (window.scrollY - sectionTop) / range))
+      targetFrame = Math.round(progress * 95)
+      showFrame(targetFrame)
+      for (let offset = -3; offset <= 4; offset += 1) preload(targetFrame + offset)
+      trimCache(targetFrame)
+    }
+    function schedule() {
+      if (!raf) raf = window.requestAnimationFrame(update)
+    }
+
+    image.dataset.frame = '0'
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    motion.addEventListener('change', schedule)
+    schedule()
+  </script>
+</body>
+</html>
