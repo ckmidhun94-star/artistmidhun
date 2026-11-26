@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { HugeiconsIcon } from '@hugeicons/react'
+import { ArrowUpRight01Icon, Cancel01Icon } from '@hugeicons/core-free-icons'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { WORKS, type WorkListItem, type WorkSection } from '../data/works'
@@ -56,7 +58,9 @@ function ProjectRow({
         <span className="editorial-project-meta">
           {item.tags?.map((tag) => <span key={tag}>{tag}</span>)}
         </span>
-        <span className="editorial-project-arrow" aria-hidden="true">↗</span>
+        <span className="editorial-project-arrow" aria-hidden="true">
+          <HugeiconsIcon className="editorial-project-arrow-icon" icon={ArrowUpRight01Icon} size={18} strokeWidth={1.6} />
+        </span>
       </button>
     </li>
   )
@@ -153,7 +157,7 @@ function ProjectDetail({
           onClick={onClose}
           aria-label={lang === 'zh' ? '關閉作品詳情' : 'Close project details'}
         >
-          ✕
+          <HugeiconsIcon icon={Cancel01Icon} size={20} strokeWidth={1.6} aria-hidden="true" />
         </button>
 
         {isProductVideo ? (

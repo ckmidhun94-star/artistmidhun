@@ -1,4 +1,13 @@
 import { useEffect, useState } from 'react'
+import { HugeiconsIcon } from '@hugeicons/react'
+import {
+  ArrowDown01Icon,
+  ArrowUp01Icon,
+  ArrowUpRight01Icon,
+  Call02Icon,
+  Location01Icon,
+  Mail01Icon,
+} from '@hugeicons/core-free-icons'
 import {
   motion,
   useMotionValue,
@@ -137,7 +146,10 @@ function Hero({
       <div className="template-topbar">
         <span className="template-mark">3D Artist · Jewelry Designer</span>
         <div className="template-topbar-meta">
-          <a href="#contact">{copy.available}</a>
+          <a href="#contact">
+            {copy.available}
+            <HugeiconsIcon icon={ArrowUpRight01Icon} size={15} strokeWidth={1.6} aria-hidden="true" />
+          </a>
         </div>
       </div>
 
@@ -148,7 +160,8 @@ function Hero({
         </h1>
         <p>{copy.intro}</p>
         <a className="template-scroll-link" href="#about">
-          {copy.scroll} <span aria-hidden="true">↓</span>
+          {copy.scroll}
+          <HugeiconsIcon className="template-scroll-icon" icon={ArrowDown01Icon} size={17} strokeWidth={1.6} aria-hidden="true" />
         </a>
       </motion.div>
     </section>
@@ -202,10 +215,19 @@ export default function EditorialPortfolio() {
           <div className="editorial-container">
             <p className="section-eyebrow">{copy.contactLabel}</p>
             <h2>{copy.contactTitle}</h2>
-            <p className="contact-details">{copy.contactDetails}</p>
+            <p className="contact-details">
+              <HugeiconsIcon icon={Location01Icon} size={17} strokeWidth={1.6} aria-hidden="true" />
+              <span>{copy.contactDetails}</span>
+            </p>
             <div className="contact-links">
-              <a href="tel:+919947238972">+91 9947238972</a>
-              <a href="mailto:ckmidhun94@gmail.com">ckmidhun94@gmail.com</a>
+              <a href="tel:+919947238972">
+                <HugeiconsIcon icon={Call02Icon} size={17} strokeWidth={1.6} aria-hidden="true" />
+                <span>+91 9947238972</span>
+              </a>
+              <a href="mailto:ckmidhun94@gmail.com">
+                <HugeiconsIcon icon={Mail01Icon} size={17} strokeWidth={1.6} aria-hidden="true" />
+                <span>ckmidhun94@gmail.com</span>
+              </a>
             </div>
             <footer className="portfolio-footer">
               <span>{copy.footer}</span>
@@ -213,7 +235,8 @@ export default function EditorialPortfolio() {
                 event.preventDefault()
                 window.scrollTo({ top: 0, behavior: 'smooth' })
               }}>
-                {copy.backTop} ↑
+                {copy.backTop}
+                <HugeiconsIcon icon={ArrowUp01Icon} size={15} strokeWidth={1.6} aria-hidden="true" />
               </a>
             </footer>
           </div>

@@ -1,4 +1,10 @@
 import { motion } from 'framer-motion'
+import { HugeiconsIcon } from '@hugeicons/react'
+import {
+  Briefcase01Icon,
+  Diamond01Icon,
+  Location01Icon,
+} from '@hugeicons/core-free-icons'
 
 const SPECIALTIES = [
   { en: '3D modeling', zh: '3D 建模' },
@@ -131,15 +137,24 @@ export function ProfileSection({ lang }: { lang: 'en' | 'zh' }) {
 
         <div className="profile-editorial-facts">
           <div>
-            <span>{isChinese ? '所在地' : 'Location'}</span>
+            <span className="profile-fact-label">
+              <HugeiconsIcon icon={Location01Icon} size={16} strokeWidth={1.6} aria-hidden="true" />
+              {isChinese ? '所在地' : 'Location'}
+            </span>
             <p>{isChinese ? '印度 Kannur' : 'Kannur, India'}</p>
           </div>
           <div>
-            <span>{isChinese ? '合作方式' : 'Availability'}</span>
+            <span className="profile-fact-label">
+              <HugeiconsIcon icon={Briefcase01Icon} size={16} strokeWidth={1.6} aria-hidden="true" />
+              {isChinese ? '合作方式' : 'Availability'}
+            </span>
             <p>{isChinese ? '自由接案 · 全職' : 'Freelance · Full-time'}</p>
           </div>
           <div>
-            <span>{isChinese ? '專業領域' : 'Practice'}</span>
+            <span className="profile-fact-label">
+              <HugeiconsIcon icon={Diamond01Icon} size={16} strokeWidth={1.6} aria-hidden="true" />
+              {isChinese ? '專業領域' : 'Practice'}
+            </span>
             <p>{isChinese ? '3D 藝術 · 珠寶設計' : '3D art · Jewelry design'}</p>
           </div>
         </div>
